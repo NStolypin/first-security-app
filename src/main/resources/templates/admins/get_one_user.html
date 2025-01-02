@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Person</title>
+    </head>
+    <body>
+        <div th:if="${!person.isEmpty()}">
+            <h1>Данные пользователя:</h1>
+            <hr>
+            <ul>
+                <li th:text="${'ФИО: ' + person.get().getUsername()}">name</li>
+                <li th:text="${'год рождения: ' + person.get().getYearOfBirth()}"></li>
+                <li th:text="${'ID: ' + person.get().getId()}">name</li>
+            </ul>
+            <form th:method="GET" th:action="@{/admin/users/{id}/edit(id=${person.get().getId()})}">
+                <input type="submit" value="Редактировать данные пользователя">
+            </form>
+            <hr>
+            <h1>Права доступа:</h1>
+            <form th:method="GET" action="">
+                <input type="submit" value="редактировать права доступа">
+            </form>
+            <hr>
+            <h1>Удалить:</h1>
+            <hr>
+            <form th:method="POST" th:action="@{/admin/users/{id}/delete(id=${person.get().getId()})}">
+                <input type="submit" value="Удалить" />
+            </form>
+        </div>
+        <p th:if="${person.isEmpty()}" th:text="${'Такого пользователя не существует'}"></p>
+    </body>
+</html>
