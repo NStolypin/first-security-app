@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_header.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_body.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_leftside_menu.css}" />
     <title>Hello admin</title>
 </head>
+
 <body>
     <div th:replace="~{logout :: logout}"></div>
-    <form method="GET" action="/admin/users">
-        <input type="submit" value="Управлять пользователями">
-    </form>
+    <div class="container">
+        <div th:replace="~{admins/sidebar :: sidebar}" class="sidebar">
+        </div>
+        <div class="main">
+            <form method="GET" action="/admin/users">
+                <input type="submit" value="Управлять пользователями">
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>

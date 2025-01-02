@@ -1,0 +1,16 @@
+.sidebar a {
+    display:block;
+    width:100%;
+    padding: .5em 1em;
+    text-decoration: none;
+}
+
+.nowPunktMenu {
+    background-color: #085584;
+    color: #ffffff;
+}
+
+.otherPunktMenu {
+    background-color: #ffffff;
+    color: #085584;
+}
