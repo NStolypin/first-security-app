@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "Role")
-public class Role implements GrantedAuthority{
+public class Role implements GrantedAuthority {
 
     @Id
     @Column(name = "id")
@@ -36,9 +36,8 @@ public class Role implements GrantedAuthority{
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "Role_Operation", uniqueConstraints = @UniqueConstraint(columnNames = {"role_id", "operation_id"}),
-                joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
+    @JoinTable(name = "Role_Operation", uniqueConstraints = @UniqueConstraint(columnNames = { "role_id",
+            "operation_id" }), joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
     private List<Operation> allowedOperations;
 
     public Collection<? extends GrantedAuthority> getAllowedOperations() {

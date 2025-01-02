@@ -12,7 +12,7 @@ import ru.esplit.first_security_app.repositories.PeopleRepository;
 import ru.esplit.first_security_app.security.PersonDetails;
 
 @Service
-public class PersonDetailsService implements UserDetailsService{
+public class PersonDetailsService implements UserDetailsService {
 
     private final PeopleRepository peopleRepository;
 
@@ -24,7 +24,7 @@ public class PersonDetailsService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Person> person = peopleRepository.findByUsername(username);
 
-        if(person.isEmpty()) {
+        if (person.isEmpty()) {
             throw new UsernameNotFoundException("user not found!");
         } else {
             return new PersonDetails(person.get());

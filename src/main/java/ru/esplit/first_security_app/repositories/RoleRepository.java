@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import ru.esplit.first_security_app.models.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, String>{
+public interface RoleRepository extends JpaRepository<Role, String> {
 }

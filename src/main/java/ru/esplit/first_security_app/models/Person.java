@@ -44,11 +44,10 @@ public class Person {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "Person_Role", uniqueConstraints = @UniqueConstraint(columnNames = {"person_id", "role_id"}),
-                joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "Person_Role", uniqueConstraints = @UniqueConstraint(columnNames = { "person_id",
+            "role_id" }), joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
-    
+
     public Person(String username, int yearOfBirth) {
         this.username = username;
         this.yearOfBirth = yearOfBirth;
