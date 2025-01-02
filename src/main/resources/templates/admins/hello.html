@@ -13,12 +13,14 @@
 <body>
     <div th:replace="~{logout :: logout}"></div>
     <div class="container">
-        <div th:replace="~{admins/sidebar :: sidebar}" class="sidebar">
+        <div th:replace="~{admins/fragments/sidebar :: sidebar}" class="sidebar">
         </div>
         <div class="main">
-            <form method="GET" action="/admin/users">
-                <input type="submit" value="Управлять пользователями">
-            </form>
+            <h1 th:replace="~{admins/fragments/general_title :: title}"></h1>
+            <div class="bodybar">
+                <a href="/admin/users">Таблица пользователей</a>
+                <a href="/admin/users/new">Создать нового пользователя</a>
+            </div>
         </div>
     </div>
 </body>

@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_header.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_body.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_leftside_menu.css}" />
-    <title>Hello user</title>
+    <title>Hello admin</title>
 </head>
+
 <body>
-    <div th:insert="~{logout :: logout}"></div>
-    <div class="container">
-        <div th:replace="~{users/sidebar :: sidebar}" class="sidebar">
-        </div>
-        <div class="main">
-        </div>
+    <div class="sidebar" th:fragment="sidebar">
+        <a class="nowPunktMenu" href="/user">Пользователям</a>
     </div>
 </body>
+
 </html>
