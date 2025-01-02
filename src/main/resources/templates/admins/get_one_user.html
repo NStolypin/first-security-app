@@ -18,7 +18,11 @@
             </form>
             <hr>
             <h1>Права доступа:</h1>
-            <form th:method="GET" action="">
+            <hr>
+                <ol>
+                    <li th:each="role : ${person.get().getRoles()}" th:text="${role.getId()}">Role</li>
+                </ol>
+            <form th:method="GET" th:action="@{/admin/users/{id}/editrole(id=${person.get().getId()})}">
                 <input type="submit" value="редактировать права доступа">
             </form>
             <hr>

@@ -7,16 +7,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.esplit.first_security_app.models.Person;
+import ru.esplit.first_security_app.models.Role;
 import ru.esplit.first_security_app.repositories.PeopleRepository;
+import ru.esplit.first_security_app.repositories.RoleRepository;
 
 @Transactional(readOnly = true)
 @Service
 public class AdminService {
 
     private final PeopleRepository peopleRepository;
+    private final RoleRepository roleRepository;
 
-    public AdminService(PeopleRepository peopleRepository) {
+    public AdminService(PeopleRepository peopleRepository, 
+            RoleRepository roleRepository) {
         this.peopleRepository = peopleRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<Person> getAllPeople() {
@@ -40,6 +45,15 @@ public class AdminService {
     @Transactional
     public void delete(long id) {
         peopleRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void create(Person person) {
+        peopleRepository.save(person);
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 
     public void doAdminStaff() {
