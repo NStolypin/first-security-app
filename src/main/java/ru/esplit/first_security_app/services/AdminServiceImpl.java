@@ -3,6 +3,7 @@ package ru.esplit.first_security_app.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +18,14 @@ public class AdminServiceImpl implements AdminService {
 
     private final PeopleRepository peopleRepository;
     private final RoleRepository roleRepository;
+    private RegistrationService registrationService;
 
     public AdminServiceImpl(PeopleRepository peopleRepository,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository,
+            RegistrationService registrationService) {
         this.peopleRepository = peopleRepository;
         this.roleRepository = roleRepository;
+        this.registrationService = registrationService;
     }
 
     public List<Person> getAllPeople() {
@@ -49,7 +53,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional
     public void create(Person person) {
-        peopleRepository.save(person);
+        registrationService.register(person);
     }
 
     public List<Role> getAllRoles() {
