@@ -9,17 +9,17 @@
 <body>
     <div class="row" th:fragment="logout">
 
-        <div class="col">
-            <p>
+        <div class="col-11 align-self-center">
+            <p class="my-0">
                 <span>Привет </span>
                 <span th:text="${personDetails.getUsername()}"></span>
                 <span> ваши права: </span>
                 <span th:each="role : ${personDetails.getRoles()}" th:text="${role.getId()} + ' '"></span>
             </p>
         </div>
-        <div class="col">
+        <div class="col-1">
             <form th:action="@{/logout}" th:method="POST">
-                <input type="submit" value="Выйти">
+                <input class="btn btn-block btn btn-dark" type="submit" value="Выйти">
             </form>
         </div>
     </div>
