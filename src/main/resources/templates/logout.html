@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_header.css}" />
     <title>Logout</title>
 </head>
 <body>
-    <div th:fragment="logout">
-        <form th:action="@{/logout}" th:method="POST">
-            <input type="submit" value="Выйти">
-        </form>
+    <div id="header" th:fragment="logout">
+        <div id="headerLeft">
+            <p>
+                <span>Привет </span>
+                <span th:text="${personDetails.getUsername()}"></span>
+                <span> ваши права: </span>
+                <span th:each="role : ${personDetails.getRoles()}" th:text="${role.getId()} + ' '"></span>
+            </p>
+        </div>
+        <div id="headerRight">
+            <form th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выйти">
+            </form>
+        </div>
     </div>
 </body>
 </html>

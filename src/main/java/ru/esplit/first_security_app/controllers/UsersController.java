@@ -22,4 +22,13 @@ public class UsersController {
         model.addAttribute("personDetails", personDetails.getPerson());
         return "users/hello";
     }
+
+    @GetMapping("/logout")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public String showInfoForHeader(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        model.addAttribute("personDetails", personDetails.getPerson());
+        return "logout";
+    }
 }

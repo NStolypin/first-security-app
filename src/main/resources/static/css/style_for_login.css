@@ -1,0 +1,33 @@
+:root{
+	font-size: calc(0.6em + 1vw);
+	box-sizing: border-box;
+	background-color: aliceblue;
+	font-family: Arial, Helvetica, sans-serif;
+}
+*,
+::before,
+::after {
+	box-sizing: inherit;
+}
+#login{
+	color: #666;
+	margin-left: auto;
+	margin-right: auto;
+	width: fit-content;
+}
+#login label {
+	display: none;
+}
+#login input {
+	font-size: 1em;
+	width: 100%;
+}
+#login input[type="submit"] {
+	margin-top: .2em;
+	background-color: #1251a3;
+	color: #ffffff;
+}
+
+#login h1 {
+	margin: .2em;
+}

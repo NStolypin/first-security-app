@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,15 +42,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> auth.requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/user").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/auth/login", "/auth/registration", "/errors").permitAll()
+                        .requestMatchers("/auth/login", "/auth/registration", "/errors",
+                        "/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/auth/login")
                         .permitAll()
                         .loginProcessingUrl("/process_login")
                         .successHandler(successUserHandler)
                         .failureUrl("/auth/login?error"))
-                .logout(out -> out.logoutUrl("/logout").
-                        logoutSuccessUrl("/auth/login"))
+                .logout(out -> out.logoutUrl("/logout")
+                        .logoutSuccessUrl("/auth/login"))
                 .build();
     }
 

@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_header.css}" />
     <title>Hello admin</title>
 </head>
 <body>
-    <div th:insert="~{logout :: logout}"></div>
-    <h1 th:text="${'Привет администратор - ' + personDetails.getUsername()}"></h1>
-    <p th:text="${'год твоего рождения: ' + personDetails.getYearOfBirth()}"></p>
-    <hr>
+    <div th:replace="~{logout :: logout}"></div>
     <form method="GET" action="/admin/users">
         <input type="submit" value="Управлять пользователями">
     </form>
