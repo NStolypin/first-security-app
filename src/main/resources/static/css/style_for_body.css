@@ -6,7 +6,7 @@
     overflow: auto;
     width:20%;
     background-color: #fff;
-    border-radius: .5em;
+    border-radius: .3em;
     max-height: 98vh;
     margin-right: .5%;
     margin-top:.5%;
@@ -14,8 +14,7 @@
 .main{
     overflow: auto;
     width:80%;
-    background-color: #fff;
-    border-radius: .5em;
+    border-radius: .3em;
     max-height: 98vh;
     padding: 0 .5em .5em .5em;
     margin-top:.5%;

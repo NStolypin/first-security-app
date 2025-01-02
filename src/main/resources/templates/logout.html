@@ -7,8 +7,9 @@
     <title>Logout</title>
 </head>
 <body>
-    <div id="header" th:fragment="logout">
-        <div id="headerLeft">
+    <div class="row" th:fragment="logout">
+
+        <div class="col">
             <p>
                 <span>Привет </span>
                 <span th:text="${personDetails.getUsername()}"></span>
@@ -16,7 +17,7 @@
                 <span th:each="role : ${personDetails.getRoles()}" th:text="${role.getId()} + ' '"></span>
             </p>
         </div>
-        <div id="headerRight">
+        <div class="col">
             <form th:action="@{/logout}" th:method="POST">
                 <input type="submit" value="Выйти">
             </form>
