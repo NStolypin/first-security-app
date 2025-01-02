@@ -3,6 +3,7 @@ package ru.esplit.first_security_app.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +18,17 @@ public class AdminServiceImpl implements AdminService {
 
     private final PeopleRepository peopleRepository;
     private final RoleRepository roleRepository;
-    private RegistrationService registrationService;
+    private final RegistrationService registrationService;
+    private final PasswordEncoder passwordEncoder;
 
     public AdminServiceImpl(PeopleRepository peopleRepository,
             RoleRepository roleRepository,
-            RegistrationService registrationService) {
+            RegistrationService registrationService,
+            PasswordEncoder passwordEncoder) {
         this.peopleRepository = peopleRepository;
         this.roleRepository = roleRepository;
         this.registrationService = registrationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Person> getAllPeople() {
@@ -41,6 +45,7 @@ public class AdminServiceImpl implements AdminService {
         if (personForUpdated.isPresent()) {
             personForUpdated.get().setUsername(updatedUser.getUsername());
             personForUpdated.get().setYearOfBirth(updatedUser.getYearOfBirth());
+            personForUpdated.get().setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             peopleRepository.save(personForUpdated.get());
         }
     }

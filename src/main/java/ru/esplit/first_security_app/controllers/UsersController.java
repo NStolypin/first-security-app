@@ -17,8 +17,7 @@ public class UsersController {
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public String showUserInfo(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
         return "users/hello";
     }
@@ -26,8 +25,7 @@ public class UsersController {
     @GetMapping("/logout")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public String showInfoForHeader(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
         return "logout";
     }
