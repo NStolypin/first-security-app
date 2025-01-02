@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <div th:insert="~{logout :: logout}"></div>
     <div th:if="${!person.isEmpty()}">
         <h1 th:text="${'Права доступа для ' + person.get().getUsername() + ':'}"></h1>
     <hr>

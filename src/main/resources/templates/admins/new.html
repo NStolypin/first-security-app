@@ -8,6 +8,7 @@
 <h1>Создать нового пользователя</h1>
 <hr>
 <body>
+    <div th:insert="~{logout :: logout}"></div>
     <form th:method="POST" th:action="@{/admin/users/new}" th:object="${person}">
         <label for="username">Введите ФИО: </label>
         <input type="text" th:field="*{username}" id="username" />
