@@ -1,7 +1,5 @@
 package ru.esplit.first_security_app.controllers;
 
-import java.util.List;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import jakarta.validation.Valid;
 import ru.esplit.first_security_app.models.Person;
 import ru.esplit.first_security_app.security.PersonDetails;
@@ -91,5 +88,17 @@ public class AdminsController {
         model.addAttribute("person", adminService.getOnePerson(id));
         model.addAttribute("roles", adminService.getAllRoles());
         return "admins/get_all_roles";
+    }
+
+    @PostMapping("/users/{id}/addrole/{role_id}")
+    public String giveTheRole(@PathVariable("id") long id, @PathVariable("role_id") String role_id) {
+        adminService.giveTheRole(id, role_id);
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/users/{id}/deleterole/{role_id}")
+    public String takeBackTheRole(@PathVariable("id") long id, @PathVariable("role_id") String role_id) {
+        adminService.takeBackTheRole(id, role_id);
+        return "redirect:/admin/users";
     }
 }

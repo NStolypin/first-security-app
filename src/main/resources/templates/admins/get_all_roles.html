@@ -7,14 +7,28 @@
 </head>
 
 <body>
-    <h1>Права доступа для :</h1>
+    <div th:if="${!person.isEmpty()}">
+        <h1 th:text="${'Права доступа для ' + person.get().getUsername() + ':'}"></h1>
     <hr>
     <ol>
-        <li th:each="role : ${roles}">
-            <p th:text="${role.getId()}">ROLE</p> <a href="">Дать права</a> <a href="">Забрать права</a>
+        <li th:each="role : ${person.get().getRoles()}">
+            <p th:text="${role.getId()}">ROLE</p>
         </li>
     </ol>
-    <br>
+    <hr>
+    <ul>
+        <li th:each="role : ${roles}">
+            <p th:text="${role.getId()}">ROLE</p>
+            <form th:method="POST" th:action="@{/admin/users/{id}/addrole/{role_id}(id=${person.get().getId()}, role_id=${role.getId()})}">
+                <input type="submit" value="Дать права" />
+            </form>
+            <form th:method="POST" th:action="@{/admin/users/{id}/deleterole/{role_id}(id=${person.get().getId()}, role_id=${role.getId()})}">
+                <input type="submit" value="Забрать права" />
+            </form>
+        </li>
+    </ul>
+    </div>
+    <p th:if="${person.isEmpty()}">Такого пользователя не существует</p>
 </body>
 
 </html>

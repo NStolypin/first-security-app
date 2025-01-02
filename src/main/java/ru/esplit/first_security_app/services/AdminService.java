@@ -34,7 +34,7 @@ public class AdminService {
     
     @Transactional
     public void update(long id, Person updatedUser){
-        Optional<Person> personForUpdated = peopleRepository.findById(id);
+        Optional<Person> personForUpdated = getOnePerson(id);
         if(personForUpdated.isPresent()) {
             personForUpdated.get().setUsername(updatedUser.getUsername());
             personForUpdated.get().setYearOfBirth(updatedUser.getYearOfBirth());
@@ -54,6 +54,29 @@ public class AdminService {
 
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
+    }
+
+    @Transactional
+    public void takeBackTheRole(long id, String role_id) {
+        Optional<Role> roleO = roleRepository.findById(role_id);
+        Optional<Person> personO = getOnePerson(id);
+        if (personO.isPresent() & roleO.isPresent()) {
+            if(personO.get().getRoles().contains(roleO.get())) {
+                personO.get().getRoles().remove(roleO.get());
+            }
+        }
+    }
+
+    @Transactional
+    public void giveTheRole(long id, String role_id) {
+        Optional<Role> roleO = roleRepository.findById(role_id);
+        Optional<Person> personO = getOnePerson(id);
+        if (personO.isPresent() & roleO.isPresent()) {
+            if(!personO.get().getRoles().contains(roleO.get())) {
+                List<Role> lr = (List<Role>) personO.get().getRoles();
+                lr.add(roleO.get());
+            }
+        }
     }
 
     public void doAdminStaff() {
