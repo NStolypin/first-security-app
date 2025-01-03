@@ -14,15 +14,19 @@ import jakarta.validation.Valid;
 import ru.esplit.first_security_app.models.Person;
 import ru.esplit.first_security_app.security.PersonDetails;
 import ru.esplit.first_security_app.services.AdminService;
+import ru.esplit.first_security_app.services.RoleService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminsController {
 
     private final AdminService adminService;
+    private final RoleService roleService;
 
-    public AdminsController(AdminService adminService) {
+    public AdminsController(AdminService adminService,
+            RoleService roleService) {
         this.adminService = adminService;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -31,6 +35,7 @@ public class AdminsController {
         PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
         model.addAttribute("people", adminService.getAllPeople());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "admins/hello";
     }
 
@@ -95,19 +100,19 @@ public class AdminsController {
         PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
         model.addAttribute("person", adminService.getOnePerson(id));
-        model.addAttribute("roles", adminService.getAllRoles());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "admins/get_all_roles";
     }
 
     @PostMapping("/users/{id}/addrole/{role_id}")
     public String giveTheRole(@PathVariable("id") long id, @PathVariable("role_id") String role_id) {
-        adminService.giveTheRole(id, role_id);
+        roleService.giveTheRole(id, role_id);
         return "redirect:/admin/users";
     }
 
     @PostMapping("/users/{id}/deleterole/{role_id}")
     public String takeBackTheRole(@PathVariable("id") long id, @PathVariable("role_id") String role_id) {
-        adminService.takeBackTheRole(id, role_id);
+        roleService.takeBackTheRole(id, role_id);
         return "redirect:/admin/users";
     }
 }
