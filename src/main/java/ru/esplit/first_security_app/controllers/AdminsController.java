@@ -27,9 +27,10 @@ public class AdminsController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String adminPage(Model model) {
+    public String adminPage(@ModelAttribute("person") Person person,Model model) {
         PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
+        model.addAttribute("people", adminService.getAllPeople());
         return "admins/hello";
     }
 
@@ -73,7 +74,7 @@ public class AdminsController {
     @PostMapping("/users/{id}/delete")
     public String delete(@PathVariable("id") long id) {
         adminService.delete(id);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/users/new")
@@ -86,7 +87,7 @@ public class AdminsController {
     @PostMapping("/users/new")
     public String create(@ModelAttribute("person") Person person) {
         adminService.create(person);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/users/{id}/editrole")
