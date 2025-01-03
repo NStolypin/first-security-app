@@ -71,7 +71,8 @@ public class AdminsController {
     public String update(@ModelAttribute("person") @Valid Person person,
             BindingResult bindingResult, @PathVariable("id") long id, Model model) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/admin";
+            model.addAttribute("roles", roleService.getAllRoles());
+            return "admins/edit";
         }
         adminService.update(id, person);
         return "redirect:/admin";
@@ -99,7 +100,7 @@ public class AdminsController {
         if (bindingResult.hasErrors()) {
             PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             model.addAttribute("personDetails", personDetails.getPerson());
-            return "admins/hello";
+            return "admins/new";
         }
         adminService.create(person);
         return "redirect:/admin";
