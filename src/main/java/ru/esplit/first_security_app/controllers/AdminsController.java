@@ -69,9 +69,11 @@ public class AdminsController {
     @PostMapping("/users/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String update(@ModelAttribute("person") @Valid Person person,
-            BindingResult bindingResult, @PathVariable("id") long id) {
+            BindingResult bindingResult, @PathVariable("id") long id, Model model) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/admin";
+            PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("personDetails", personDetails.getPerson());
+            return "admins/hello";
         }
         adminService.update(id, person);
         return "redirect:/admin";
@@ -89,16 +91,16 @@ public class AdminsController {
     @GetMapping("/users/new")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String newPerson(@ModelAttribute("person") Person person, Model model) {
-        PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("personDetails", personDetails.getPerson());
         return "admins/new";
     }
 
     @PostMapping("/users/new")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String create(@ModelAttribute("person") @Valid Person person, 
-            BindingResult bindingResult) {
+            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("personDetails", personDetails.getPerson());
             return "admins/hello";
         }
         adminService.create(person);
