@@ -71,9 +71,7 @@ public class AdminsController {
     public String update(@ModelAttribute("person") @Valid Person person,
             BindingResult bindingResult, @PathVariable("id") long id, Model model) {
         if (bindingResult.hasErrors()) {
-            PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("personDetails", personDetails.getPerson());
-            return "admins/hello";
+            return "redirect:/admin";
         }
         adminService.update(id, person);
         return "redirect:/admin";
