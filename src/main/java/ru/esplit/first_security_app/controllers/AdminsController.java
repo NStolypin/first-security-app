@@ -67,22 +67,27 @@ public class AdminsController {
     }
 
     @PostMapping("/users/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String update(@ModelAttribute("person") @Valid Person person,
             BindingResult bindingResult, @PathVariable("id") long id) {
         if (bindingResult.hasErrors()) {
-            return "/admin/users/" + id + "/edit";
+            return "redirect:/admin";
         }
         adminService.update(id, person);
         return "redirect:/admin";
     }
 
     @PostMapping("/users/{id}/delete")
-    public String delete(@PathVariable("id") long id) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String delete(@PathVariable("id") long id, Model model) {
+        PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("personDetails", personDetails.getPerson());
         adminService.delete(id);
         return "redirect:/admin";
     }
 
     @GetMapping("/users/new")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String newPerson(@ModelAttribute("person") Person person, Model model) {
         PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
@@ -90,12 +95,18 @@ public class AdminsController {
     }
 
     @PostMapping("/users/new")
-    public String create(@ModelAttribute("person") Person person) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String create(@ModelAttribute("person") @Valid Person person, 
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "admins/hello";
+        }
         adminService.create(person);
         return "redirect:/admin";
     }
 
     @GetMapping("/users/{id}/editrole")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editRole(Model model, @PathVariable("id") long id) {
         PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
@@ -105,12 +116,14 @@ public class AdminsController {
     }
 
     @PostMapping("/users/{id}/addrole/{role_id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String giveTheRole(@PathVariable("id") long id, @PathVariable("role_id") String role_id) {
         roleService.giveTheRole(id, role_id);
         return "redirect:/admin/users";
     }
 
     @PostMapping("/users/{id}/deleterole/{role_id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String takeBackTheRole(@PathVariable("id") long id, @PathVariable("role_id") String role_id) {
         roleService.takeBackTheRole(id, role_id);
         return "redirect:/admin/users";

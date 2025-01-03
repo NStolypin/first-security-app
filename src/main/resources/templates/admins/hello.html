@@ -97,12 +97,14 @@
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">ФИО</th>
+                  <th scope="col">год рождения</th>
                   <th scope="col">Права доступа</th>
                 </tr>
               </thead>
               <tbody>
                   <td scope="row" th:text="${personDetails.getId()}">ID</th>
                   <td th:text="${personDetails.getUsername()}">FIO</td>
+                  <td th:text="${personDetails.getYearOfBirth()}">YearOfBirth</td>
                   <td>
                     <span th:each="role : ${personDetails.getRoles()}" th:text="${role.getId() + ' '}">ROLE</span>
                   </td>
