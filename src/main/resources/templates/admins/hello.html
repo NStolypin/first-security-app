@@ -40,6 +40,7 @@
                     <tr>
                       <th scope="col">ID</th>
                       <th scope="col">ФИО</th>
+                      <th scope="col">год рождения</th>
                       <th scope="col">Права доступа</th>
                       <th scope="col">Редактировать</th>
                       <th scope="col">Удалить</th>
@@ -49,6 +50,7 @@
                     <tr th:each="personN : ${people}">
                       <td scope="row" th:text="${personN.getId()}">ID</th>
                       <td th:text="${personN.getUsername()}">FIO</td>
+                      <td th:text="${personDetails.getYearOfBirth()}">YearOfBirth</td>
                       <td>
                         <span th:each="role : ${personN.getRoles()}" th:text="${role.getId() + ' '}">ROLE</span>
                       </td>
@@ -121,8 +123,8 @@
         </div>
         <div class="modal-body">
           <form th:method="POST" th:action="@{/admin/users/{id}(id=${personM.getId()})}" th:object="${person}">
-            <label for="username" class="form-label">Введите ФИО: </label>
-            <input type="text" class="form-control" th:value="${personM.getUsername()}" th:name="username" id="username"/>
+            <label for="${'username' + personM.getId()}" class="form-label">Введите ФИО: </label>
+            <input type="text" class="form-control" th:value="${personM.getUsername()}" th:name="username" id="${'username' + personM.getId()}"/>
             <div class="form-text" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error
             </div>
             <label th:for="${'yearOfBirth' + personM.getId()}" class="form-label">Введите год рождения: </label>

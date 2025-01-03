@@ -1,20 +1,56 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_header.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_body.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style_for_leftside_menu.css}" />
-    <title>Hello user</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Привет Админ</title>
+    <link type="text/css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
+
 <body>
-    <div th:insert="~{logout :: logout}"></div>
-    <div class="container">
-        <div th:replace="~{users/sidebar :: sidebar}" class="sidebar">
-        </div>
-        <div class="main">
+    <div class="container-fluid align-items-center bg-dark text-light">
+        <div th:replace="~{logout :: logout}"></div>
+    </div>
+
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="d-flex align-items-start" th:fragment="sidebar">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                        aria-selected="true">Пользователям</button>
+                </div>
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab">
+                        <button type="button" class="btn btn-outline-secondary w-100">О пользователе</button>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">ФИО</th>
+                                    <th scope="col">год рождения</th>
+                                    <th scope="col">Права доступа</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td scope="row" th:text="${personDetails.getId()}">ID</th>
+                                <td th:text="${personDetails.getUsername()}">FIO</td>
+                                <td th:text="${personDetails.getYearOfBirth()}">YearOfBirth</td>
+                                <td>
+                                    <span th:each="role : ${personDetails.getRoles()}"
+                                        th:text="${role.getId() + ' '}">ROLE</span>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
+
 </html>
