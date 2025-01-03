@@ -79,8 +79,8 @@
                   <div class="form-text" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error
                   </div>
                   <label for="username" class="form-label">Выбарите роли: </label>
-                  <select class="form-select" multiple>
-                    <option th:each="role : ${person.getRoles()}" value="${role.getId()}" th:text="${role.getId()}">ROLE</option>
+                  <select class="form-select" multiple th:field="*{roles}">
+                    <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getId()}">ROLE</option>
                   </select>
                   <input type="submit" class="btn btn-success" value="Создать" />
                 </form>
