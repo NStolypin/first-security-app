@@ -31,7 +31,7 @@ public class AdminsController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String adminPage(@ModelAttribute("person") Person person,Model model) {
+    public String adminPage(@ModelAttribute("person") Person person, Model model) {
         PersonDetails personDetails = (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("personDetails", personDetails.getPerson());
         model.addAttribute("people", adminService.getAllPeople());
@@ -73,7 +73,7 @@ public class AdminsController {
             return "/admin/users/" + id + "/edit";
         }
         adminService.update(id, person);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
     @PostMapping("/users/{id}/delete")

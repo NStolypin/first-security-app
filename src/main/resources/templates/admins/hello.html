@@ -46,15 +46,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="person : ${people}">
-                      <td scope="row" th:text="${person.getId()}">ID</th>
-                      <td th:text="${person.getUsername()}">FIO</td>
+                    <tr th:each="personN : ${people}">
+                      <td scope="row" th:text="${personN.getId()}">ID</th>
+                      <td th:text="${personN.getUsername()}">FIO</td>
                       <td>
-                        <span th:each="role : ${person.getRoles()}" th:text="${role.getId() + ' '}">ROLE</span>
+                        <span th:each="role : ${personN.getRoles()}" th:text="${role.getId() + ' '}">ROLE</span>
                       </td>
-                      <td><a href=""><button type="button" class="btn btn-primary">Редактировать</button></a></td>
+                      <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="${'#editUser' + personN.getId()}">Редактировать</button></td>
                       <td>
-                        <form th:method="POST" th:action="@{/admin/users/{id}/delete(id=${person.getId()})}">
+                        <form th:method="POST" th:action="@{/admin/users/{id}/delete(id=${personN.getId()})}">
                           <input class="btn btn-danger" type="submit" value="Удалить" />
                         </form>
                       </td>
@@ -78,8 +78,8 @@
                   <input type="text" class="form-control" th:field="*{password}" id="password" />
                   <div class="form-text" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error
                   </div>
-                  <label for="username" class="form-label">Выбарите роли: </label>
-                  <select class="form-select" multiple th:field="*{roles}">
+                  <label for="usersRoles" class="form-label">Выбарите роли: </label>
+                  <select class="form-select" multiple th:field="*{roles}" id="usersRoles">
                     <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getId()}">ROLE</option>
                   </select>
                   <input type="submit" class="btn btn-success" value="Создать" />
@@ -107,8 +107,43 @@
                 </tr>
               </tbody>
             </table>
-
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:each="personM, itemStat : *{people}" class="modal fade" th:id="${'editUser' + personM.getId()}" tabindex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editUserLabel">Редактировать пользователя</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form th:method="POST" th:action="@{/admin/users/{id}(id=${personM.getId()})}" th:object="${person}">
+            <label for="username" class="form-label">Введите ФИО: </label>
+            <input type="text" class="form-control" th:value="${personM.getUsername()}" th:name="username" id="username"/>
+            <div class="form-text" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error
+            </div>
+            <label th:for="${'yearOfBirth' + personM.getId()}" class="form-label">Введите год рождения: </label>
+            <input type="text" class="form-control" th:value="${personM.getYearOfBirth()}" th:name="yearOfBirth" th:id="${'yearOfBirth' + personM.getId()}" />
+            <div class="form-text" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}">Year of
+              birth
+              error</div>
+            <label th:for="${'password' + personM.getId()}" class="form-label">Введите пароль: </label>
+            <input type="text" class="form-control" th:field="*{password}" th:id="${'password' + personM.getId()}" />
+            <div class="form-text" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error
+            </div>
+            <label for="${'usersRoles' + personM.getId()}" class="form-label">Выбарите роли: </label>
+            <select class="form-select" multiple name="roles" th:id="${'usersRoles' + personM.getId()}">
+              <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getId()}" th:selected="${personM.getRoles().contains(role) ? true : false}">ROLE</option>
+            </select>
+            <input type="submit" class="btn btn-success" value="Редактировать" />
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="button" class="btn btn-primary">Сохранить изменения</button>
         </div>
       </div>
     </div>

@@ -41,10 +41,8 @@ public class AdminServiceImpl implements AdminService {
     public void update(long id, Person updatedUser) {
         Optional<Person> personForUpdated = getOnePerson(id);
         if (personForUpdated.isPresent()) {
-            personForUpdated.get().setUsername(updatedUser.getUsername());
-            personForUpdated.get().setYearOfBirth(updatedUser.getYearOfBirth());
-            personForUpdated.get().setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-            peopleRepository.save(personForUpdated.get());
+            updatedUser.setId(id);
+            peopleRepository.save(updatedUser);
         }
     }
 
